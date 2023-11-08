@@ -99,6 +99,17 @@ describe("SectorsService", () => {
 			}).rejects.toThrow("Name cannot be empty!");
 		});
 
+		it("should throw an error if id is invalid", async () => {
+			expect(async () => {
+				await service.create(validSector);
+
+				await service.update("", {
+					name: "test",
+					description: "test description",
+				});
+			}).rejects.toThrow("invalid id!");
+		});
+
 		it("should throw a bad request if already exists a sector with same name", async () => {
 			expect(async () => {
 				await service.create(validSector);
@@ -115,6 +126,30 @@ describe("SectorsService", () => {
 
 				await service.update(newSector.id, validSector);
 			}).rejects.toThrow("Cannot have 2 sectors with the same name!");
+		});
+	});
+
+	describe("Sector delete suite", () => {
+		it("should delete a sector", async () => {
+			const newSector = await service.create(validSector);
+			await service.remove(newSector.id);
+			expect(async () => {
+				await service.findOne(newSector.id);
+			}).rejects.toThrow("Sector not found!");
+		});
+
+		it("should throw a not found if sector does not exist!", async () => {
+			expect(async () => {
+				await service.remove("123");
+			}).rejects.toThrow("This sector does not exist!");
+		});
+
+		it("should throw an error if id is invalid", async () => {
+			expect(async () => {
+				await service.create(validSector);
+
+				await service.remove("");
+			}).rejects.toThrow("invalid id!");
 		});
 	});
 });
