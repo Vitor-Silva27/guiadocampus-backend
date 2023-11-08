@@ -86,8 +86,16 @@ export class SectorPrismaRepository implements ISectorRepository {
 		});
 	}
 
-	delete(id: string): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	async delete(id: string): Promise<Sector> {
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
+		return await this.prisma.sector.delete({
+			where: {
+				id,
+			},
+		});
 	}
 
 	async exists(identifier: string): Promise<boolean> {

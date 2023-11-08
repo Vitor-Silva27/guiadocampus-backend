@@ -43,7 +43,7 @@ export class SectorsService {
 
 	async update(id: string, updateSectorDto: UpdateSectorDto) {
 		if (!id) {
-			throw new BadRequestException("id not provided!");
+			throw new BadRequestException("invalid id!");
 		}
 		if (updateSectorDto.name === "") {
 			throw new BadRequestException("Name cannot be empty!");
@@ -52,6 +52,9 @@ export class SectorsService {
 	}
 
 	async remove(id: string) {
-		return `This action removes a #${id} sector`;
+		if (!id) {
+			throw new BadRequestException("invalid id!");
+		}
+		return await this.repository.delete(id);
 	}
 }

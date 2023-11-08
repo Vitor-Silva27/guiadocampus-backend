@@ -59,8 +59,14 @@ export class InMemoryRepository implements ISectorRepository {
 		return this.sectors.find(sector => sector.id === id);
 	}
 
-	delete(id: string): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	async delete(id: string): Promise<Sector> {
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
+		const index = this.sectors.findIndex(sector => sector.id === id);
+		const deleted = this.sectors.splice(index, 1);
+		return deleted[0];
 	}
 
 	async exists(identifier: string): Promise<boolean> {
