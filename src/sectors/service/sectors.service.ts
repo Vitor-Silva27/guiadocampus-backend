@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	Inject,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { ISectorRepository } from "../repositories/ISectorRepository";
@@ -24,7 +29,16 @@ export class SectorsService {
 	}
 
 	async findOne(id: string) {
-		return await this.repository.findOne(id);
+		if (!id) {
+			throw new BadRequestException("invalid id!");
+		}
+
+		const sector = await this.repository.findOne(id);
+
+		if (!sector) {
+			throw new NotFoundException("Sector not found!");
+		}
+		return sector;
 	}
 
 	update(id: string, updateSectorDto: UpdateSectorDto) {
