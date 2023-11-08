@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { ISectorRepository } from "../repositories/ISectorRepository";
@@ -12,13 +12,15 @@ export class SectorsService {
 
 	async create({ name, generalInfo, description }: CreateSectorDto) {
 		if (!name) {
-			throw new Error("Could not create a sector without a name!");
+			throw new BadRequestException(
+				"Could not create a sector without a name!",
+			);
 		}
 		return this.repository.create({ name, generalInfo, description });
 	}
 
 	findAll() {
-		return `This action returns all sectors`;
+		return this.repository.findAll();
 	}
 
 	findOne(id: string) {

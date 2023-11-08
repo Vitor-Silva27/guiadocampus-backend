@@ -30,4 +30,11 @@ describe("SectorsService", () => {
 			await service.create(validSector);
 		}).rejects.toThrow("Could not create a sector that already exists!");
 	});
+
+	it("should find all sectors", async () => {
+		await service.create(validSector);
+		const sectors = await service.findAll();
+		expect(sectors.length).toBeGreaterThan(0);
+		expect(sectors[0].name).toBe(validSector.name);
+	});
 });
