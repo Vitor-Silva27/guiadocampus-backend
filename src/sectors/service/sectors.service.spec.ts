@@ -46,10 +46,22 @@ describe("SectorsService", () => {
 		it("should find a sector by id", async () => {
 			const newSector = await service.create(validSector);
 			const foundSector = await service.findOne(newSector.id);
-			console.log("newSector", newSector);
-			console.log("foundSector", foundSector);
 
 			expect(foundSector.name).toBe(newSector.name);
+		});
+
+		it("should throw an error if id is invalid", async () => {
+			expect(async () => {
+				const sector = await service.findOne("");
+				return sector;
+			}).rejects.toThrow("invalid id!");
+		});
+
+		it("should throw a not found if sector does not exists!", async () => {
+			expect(async () => {
+				const sector = await service.findOne("123");
+				return sector;
+			}).rejects.toThrow("Sector not found!");
 		});
 	});
 });
