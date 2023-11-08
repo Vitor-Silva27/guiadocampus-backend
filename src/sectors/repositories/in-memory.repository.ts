@@ -6,8 +6,26 @@ import { ISectorRepository } from "./ISectorRepository";
 
 @Injectable()
 export class InMemoryRepository implements ISectorRepository {
-	create(sector: CreateSectorDto): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	private sectors: Sector[] = [];
+
+	async create(sector: CreateSectorDto): Promise<Sector> {
+		if (await this.exists(sector.name)) {
+			throw new Error("Could not create a sector that already exists!");
+		}
+
+		const newSector = new Sector(
+			sector.name,
+			sector.description,
+			sector.generalInfo,
+			sector.contacts,
+		);
+
+		this.sectors.push({
+			id: "id" + this.sectors.length + 1,
+			...newSector,
+		});
+
+		return newSector;
 	}
 	update(sector: UpdateSectorDto): Promise<Sector> {
 		throw new Error("Method not implemented.");
@@ -20,5 +38,11 @@ export class InMemoryRepository implements ISectorRepository {
 	}
 	delete(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");
+	}
+
+	async exists(identifier: string): Promise<boolean> {
+		return this.sectors.some(
+			sector => sector.id === identifier || sector.name === identifier,
+		);
 	}
 }
