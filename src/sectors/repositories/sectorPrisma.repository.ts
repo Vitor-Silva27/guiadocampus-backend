@@ -3,23 +3,13 @@ import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { Sector } from "../entities/sector.entity";
 import { ISectorRepository } from "./ISectorRepository";
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class SectorPrismaRepository implements ISectorRepository {
 	constructor(private prisma: PrismaService) {}
 
 	async create(sector: CreateSectorDto): Promise<Sector> {
-		if (await this.exists(sector.name)) {
-			throw new BadRequestException(
-				"Could not create a sector that already exists!",
-			);
-		}
-
 		const newSector = await this.prisma.sector.create({
 			data: {
 				name: sector.name,
@@ -42,16 +32,6 @@ export class SectorPrismaRepository implements ISectorRepository {
 		id: string,
 		{ description, name }: UpdateSectorDto,
 	): Promise<Sector> {
-		if (!(await this.exists(id))) {
-			throw new NotFoundException("This sector does not exist!");
-		}
-
-		if (await this.exists(name)) {
-			throw new BadRequestException(
-				"Cannot have 2 sectors with the same name!",
-			);
-		}
-
 		const sector = await this.prisma.sector.update({
 			where: {
 				id,
@@ -87,10 +67,6 @@ export class SectorPrismaRepository implements ISectorRepository {
 	}
 
 	async delete(id: string): Promise<Sector> {
-		if (!(await this.exists(id))) {
-			throw new NotFoundException("This sector does not exist!");
-		}
-
 		return await this.prisma.sector.delete({
 			where: {
 				id,

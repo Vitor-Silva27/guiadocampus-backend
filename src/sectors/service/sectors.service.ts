@@ -16,11 +16,18 @@ export class SectorsService {
 	) {}
 
 	async create({ name, generalInfo, description }: CreateSectorDto) {
+		if (await this.exists(name)) {
+			throw new BadRequestException(
+				"Could not create a sector that already exists!",
+			);
+		}
+
 		if (!name) {
 			throw new BadRequestException(
 				"Could not create a sector without a name!",
 			);
 		}
+
 		return this.repository.create({ name, generalInfo, description });
 	}
 
@@ -45,6 +52,17 @@ export class SectorsService {
 		if (!id) {
 			throw new BadRequestException("invalid id!");
 		}
+
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
+		if (await this.exists(updateSectorDto.name)) {
+			throw new BadRequestException(
+				"Cannot have 2 sectors with the same name!",
+			);
+		}
+
 		if (updateSectorDto.name === "") {
 			throw new BadRequestException("Name cannot be empty!");
 		}
@@ -55,6 +73,15 @@ export class SectorsService {
 		if (!id) {
 			throw new BadRequestException("invalid id!");
 		}
+
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
 		return await this.repository.delete(id);
+	}
+
+	async exists(id: string): Promise<boolean> {
+		return this.repository.exists(id);
 	}
 }

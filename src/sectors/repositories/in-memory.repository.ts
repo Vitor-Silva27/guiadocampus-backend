@@ -13,10 +13,6 @@ export class InMemoryRepository implements ISectorRepository {
 	private sectors: Sector[] = [];
 
 	async create(sector: CreateSectorDto): Promise<Sector> {
-		if (await this.exists(sector.name)) {
-			throw new Error("Could not create a sector that already exists!");
-		}
-
 		const newSector = new Sector(
 			sector.name,
 			sector.description,
