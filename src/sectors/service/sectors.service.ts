@@ -10,11 +10,11 @@ export class SectorsService {
 		private repository: ISectorRepository,
 	) {}
 
-	async create({ name, generalInfo, contacts, description }: CreateSectorDto) {
+	async create({ name, generalInfo, description }: CreateSectorDto) {
 		if (!name) {
 			throw new Error("Could not create a sector without a name!");
 		}
-		return this.repository.create({ name, generalInfo, contacts, description });
+		return this.repository.create({ name, generalInfo, description });
 	}
 
 	findAll() {
