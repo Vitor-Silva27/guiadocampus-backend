@@ -41,11 +41,11 @@ export class SectorsService {
 		return sector;
 	}
 
-	update(id: string, updateSectorDto: UpdateSectorDto) {
+	async update(id: string, updateSectorDto: UpdateSectorDto) {
 		return `This action updates a #${id} sector`;
 	}
 
-	remove(id: string) {
+	async remove(id: string) {
 		return `This action removes a #${id} sector`;
 	}
 }
