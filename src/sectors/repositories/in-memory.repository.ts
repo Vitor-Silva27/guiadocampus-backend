@@ -17,7 +17,6 @@ export class InMemoryRepository implements ISectorRepository {
 			sector.name,
 			sector.description,
 			sector.generalInfo,
-			sector.contacts,
 		);
 
 		this.sectors.push({
@@ -30,8 +29,8 @@ export class InMemoryRepository implements ISectorRepository {
 	update(sector: UpdateSectorDto): Promise<Sector> {
 		throw new Error("Method not implemented.");
 	}
-	findAll(): Promise<Sector[]> {
-		throw new Error("Method not implemented.");
+	async findAll(): Promise<Sector[]> {
+		return this.sectors;
 	}
 	findOne(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");

@@ -3,7 +3,7 @@ import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { Sector } from "../entities/sector.entity";
 import { ISectorRepository } from "./ISectorRepository";
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 
 @Injectable()
 export class SectorPrismaRepository implements ISectorRepository {
@@ -11,13 +11,23 @@ export class SectorPrismaRepository implements ISectorRepository {
 
 	async create(sector: CreateSectorDto): Promise<Sector> {
 		if (await this.exists(sector.name)) {
-			throw new Error("Could not create a sector that already exists!");
+			throw new BadRequestException(
+				"Could not create a sector that already exists!",
+			);
 		}
 
 		const newSector = await this.prisma.sector.create({
 			data: {
 				name: sector.name,
 				description: sector.description,
+				infos: {
+					createMany: {
+						data: sector.generalInfo.map(info => ({
+							title: info.title,
+							description: info.description,
+						})),
+					},
+				},
 			},
 		});
 
@@ -27,8 +37,8 @@ export class SectorPrismaRepository implements ISectorRepository {
 	update(sector: UpdateSectorDto): Promise<Sector> {
 		throw new Error("Method not implemented.");
 	}
-	findAll(): Promise<Sector[]> {
-		throw new Error("Method not implemented.");
+	async findAll(): Promise<Sector[]> {
+		return await this.prisma.sector.findMany();
 	}
 	findOne(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");

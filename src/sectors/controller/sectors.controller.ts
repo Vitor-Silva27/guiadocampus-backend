@@ -17,7 +17,11 @@ export class SectorsController {
 
 	@Post()
 	create(@Body() createSectorDto: CreateSectorDto) {
-		return this.sectorsService.create(createSectorDto);
+		try {
+			return this.sectorsService.create(createSectorDto);
+		} catch (err) {
+			throw err;
+		}
 	}
 
 	@Get()
