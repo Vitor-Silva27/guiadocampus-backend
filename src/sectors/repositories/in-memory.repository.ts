@@ -19,10 +19,11 @@ export class InMemoryRepository implements ISectorRepository {
 			sector.generalInfo,
 		);
 
-		this.sectors.push({
-			id: "id" + this.sectors.length + 1,
-			...newSector,
-		});
+		const generatedId = "id" + (this.sectors.length + 1);
+
+		Object.assign(newSector, { id: generatedId });
+
+		this.sectors.push(newSector);
 
 		return newSector;
 	}
@@ -32,8 +33,8 @@ export class InMemoryRepository implements ISectorRepository {
 	async findAll(): Promise<Sector[]> {
 		return this.sectors;
 	}
-	findOne(id: string): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	async findOne(id: string): Promise<Sector> {
+		return this.sectors.find(sector => sector.id === id);
 	}
 	delete(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");

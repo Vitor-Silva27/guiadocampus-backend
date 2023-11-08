@@ -19,12 +19,12 @@ export class SectorsService {
 		return this.repository.create({ name, generalInfo, description });
 	}
 
-	findAll() {
-		return this.repository.findAll();
+	async findAll() {
+		return await this.repository.findAll();
 	}
 
-	findOne(id: string) {
-		return `This action returns a #${id} sector`;
+	async findOne(id: string) {
+		return await this.repository.findOne(id);
 	}
 
 	update(id: string, updateSectorDto: UpdateSectorDto) {

@@ -37,15 +37,32 @@ export class SectorPrismaRepository implements ISectorRepository {
 	update(sector: UpdateSectorDto): Promise<Sector> {
 		throw new Error("Method not implemented.");
 	}
+
 	async findAll(): Promise<Sector[]> {
 		return await this.prisma.sector.findMany();
 	}
-	findOne(id: string): Promise<Sector> {
-		throw new Error("Method not implemented.");
+
+	async findOne(id: string): Promise<Sector> {
+		return this.prisma.sector.findUnique({
+			where: {
+				id: id,
+			},
+			include: {
+				contacts: true,
+				infos: {
+					select: {
+						title: true,
+						description: true,
+					},
+				},
+			},
+		});
 	}
+
 	delete(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");
 	}
+
 	async exists(identifier: string): Promise<boolean> {
 		const exists = await this.prisma.sector.findFirst({
 			where: {
