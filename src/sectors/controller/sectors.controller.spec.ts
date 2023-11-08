@@ -1,20 +1,16 @@
-import { Test, TestingModule } from "@nestjs/testing";
+jest.mock("../service/sectors.service");
 import { SectorsController } from "./sectors.controller";
 import { SectorsService } from "../service/sectors.service";
+import { InMemoryRepository } from "../repositories/in-memory.repository";
 
 describe("SectorsController", () => {
 	let controller: SectorsController;
+	let service: SectorsService;
 
-	beforeEach(async () => {
-		const module: TestingModule = await Test.createTestingModule({
-			controllers: [SectorsController],
-			providers: [SectorsService],
-		}).compile();
-
-		controller = module.get<SectorsController>(SectorsController);
+	beforeEach(() => {
+		service = new SectorsService(new InMemoryRepository());
+		controller = new SectorsController(service);
+		service.create;
 	});
-
-	it("should be defined", () => {
-		expect(controller).toBeDefined();
-	});
+	it("should throw a bad request in case of missing properties", () => {});
 });

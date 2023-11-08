@@ -1,11 +1,14 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { ISectorRepository } from "../repositories/ISectorRepository";
 
 @Injectable()
 export class SectorsService {
-	constructor(private repository: ISectorRepository) {}
+	constructor(
+		@Inject("RepositoryGateway")
+		private repository: ISectorRepository,
+	) {}
 
 	async create({ name, generalInfo, contacts, description }: CreateSectorDto) {
 		if (!name) {
