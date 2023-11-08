@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { Sector } from "../entities/sector.entity";
@@ -27,15 +31,34 @@ export class InMemoryRepository implements ISectorRepository {
 
 		return newSector;
 	}
-	update(sector: UpdateSectorDto): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	async update(
+		id: string,
+		{ name, description }: UpdateSectorDto,
+	): Promise<Sector> {
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
+		if (await this.exists(name)) {
+			throw new BadRequestException(
+				"Cannot have 2 sectors with the same name!",
+			);
+		}
+
+		const mySector = await this.findOne(id);
+		mySector.name = name;
+		mySector.description = description;
+		return mySector;
 	}
+
 	async findAll(): Promise<Sector[]> {
 		return this.sectors;
 	}
+
 	async findOne(id: string): Promise<Sector> {
 		return this.sectors.find(sector => sector.id === id);
 	}
+
 	delete(id: string): Promise<Sector> {
 		throw new Error("Method not implemented.");
 	}

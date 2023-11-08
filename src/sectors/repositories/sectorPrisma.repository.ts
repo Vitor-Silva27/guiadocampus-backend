@@ -3,7 +3,11 @@ import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
 import { Sector } from "../entities/sector.entity";
 import { ISectorRepository } from "./ISectorRepository";
-import { BadRequestException, Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
 
 @Injectable()
 export class SectorPrismaRepository implements ISectorRepository {
@@ -34,8 +38,31 @@ export class SectorPrismaRepository implements ISectorRepository {
 		return newSector;
 	}
 
-	update(sector: UpdateSectorDto): Promise<Sector> {
-		throw new Error("Method not implemented.");
+	async update(
+		id: string,
+		{ description, name }: UpdateSectorDto,
+	): Promise<Sector> {
+		if (!(await this.exists(id))) {
+			throw new NotFoundException("This sector does not exist!");
+		}
+
+		if (await this.exists(name)) {
+			throw new BadRequestException(
+				"Cannot have 2 sectors with the same name!",
+			);
+		}
+
+		const sector = await this.prisma.sector.update({
+			where: {
+				id,
+			},
+			data: {
+				name,
+				description,
+			},
+		});
+
+		return sector;
 	}
 
 	async findAll(): Promise<Sector[]> {
