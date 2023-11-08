@@ -10,7 +10,9 @@ import {
 import { SectorsService } from "../service/sectors.service";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("sectors")
 @Controller("sectors")
 export class SectorsController {
 	constructor(private readonly sectorsService: SectorsService) {}
