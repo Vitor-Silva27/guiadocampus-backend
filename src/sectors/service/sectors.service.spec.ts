@@ -64,4 +64,57 @@ describe("SectorsService", () => {
 			}).rejects.toThrow("Sector not found!");
 		});
 	});
+
+	describe("Sectors update suite", () => {
+		it("should update a sector", async () => {
+			const newSector = await service.create(validSector);
+
+			await service.update(newSector.id, {
+				name: "test",
+				description: "test description",
+			});
+
+			const updatedSector = await service.findOne(newSector.id);
+
+			expect(updatedSector.name).toBe("test");
+		});
+
+		it("should throw a not found if sector does not exist!", async () => {
+			expect(async () => {
+				await service.update("123", {
+					name: "test",
+					description: "test description",
+				});
+			}).rejects.toThrow("This sector does not exist!");
+		});
+
+		it("should throw a Bad request if sector name is invalid!", async () => {
+			expect(async () => {
+				const newSector = await service.create(validSector);
+
+				await service.update(newSector.id, {
+					name: "",
+					description: "test description",
+				});
+			}).rejects.toThrow("Name cannot be empty!");
+		});
+
+		it("should throw a bad request if already exists a sector with same name", async () => {
+			expect(async () => {
+				await service.create(validSector);
+				const newSector = await service.create({
+					name: "test",
+					description: "desc test",
+					generalInfo: [
+						{
+							title: "title test",
+							description: "description",
+						},
+					],
+				});
+
+				await service.update(newSector.id, validSector);
+			}).rejects.toThrow("Cannot have 2 sectors with the same name!");
+		});
+	});
 });
