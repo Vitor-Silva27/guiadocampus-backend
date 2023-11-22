@@ -51,7 +51,11 @@ export class InMemoryRepository implements IAdminRepository {
 
 	async exists(identifier: string): Promise<boolean> {
 		return this.admins.some(
-			admin => admin.id === identifier || admin.name === identifier,
+			admin => admin.id === identifier || admin.email === identifier,
 		);
+	}
+
+	private async hashPassword(password: string): Promise<string> {
+		return "";
 	}
 }
