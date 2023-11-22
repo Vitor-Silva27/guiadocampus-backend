@@ -74,3 +74,12 @@ model Info {
 
   @@map("infos")
 }
+
+model Admin {
+  id String @id @default(uuid())
+  name String
+  password String
+  email String
+
+  @@map("admins")
+}
