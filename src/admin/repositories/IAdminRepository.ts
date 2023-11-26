@@ -7,6 +7,7 @@ export interface IAdminRepository {
 	update(id: string, admin: UpdateAdminDto): Promise<Admin>;
 	findAll(): Promise<Admin[]>;
 	findOne(id: string): Promise<Admin>;
+	findByEmail(email: string): Promise<Admin>;
 	delete(id: string): Promise<Admin>;
 	exists(identifier: string): Promise<boolean>;
 }

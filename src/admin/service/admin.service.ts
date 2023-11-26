@@ -5,7 +5,6 @@ import {
 	NotFoundException,
 } from "@nestjs/common";
 import { CreateAdminDto } from "../dto/create-admin.dto";
-import { UpdateAdminDto } from "../dto/update-admin.dto";
 import { IAdminRepository } from "../repositories/IAdminRepository";
 import { Admin } from "../entities/admin.entity";
 
@@ -47,12 +46,26 @@ export class AdminService {
 			throw new BadRequestException("invalid id!");
 		}
 
-		const sector = await this.repository.findOne(id);
+		const admin = await this.repository.findOne(id);
 
-		if (!sector) {
+		if (!admin) {
 			throw new NotFoundException("admin not found!");
 		}
-		return sector;
+		return admin;
+	}
+
+	async findOneByEmail(email: string) {
+		if (!email) {
+			throw new BadRequestException("invalid email!");
+		}
+
+		const admin = await this.repository.findByEmail(email);
+
+		if (!admin) {
+			throw new NotFoundException("admin not found!");
+		}
+
+		return admin;
 	}
 
 	async remove(id: string) {

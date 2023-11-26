@@ -15,5 +15,6 @@ import { AdminPrismaRepository } from "./repositories/adminPrisma.repository";
 			useExisting: AdminPrismaRepository,
 		},
 	],
+	exports: [AdminService],
 })
 export class AdminModule {}

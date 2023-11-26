@@ -39,6 +39,10 @@ export class InMemoryRepository implements IAdminRepository {
 		return this.admins.find(admin => admin.id === id);
 	}
 
+	async findByEmail(email: string): Promise<Admin> {
+		return this.admins.find(admin => admin.email === email);
+	}
+
 	async delete(id: string): Promise<Admin> {
 		if (!(await this.exists(id))) {
 			throw new NotFoundException("This admin does not exist!");

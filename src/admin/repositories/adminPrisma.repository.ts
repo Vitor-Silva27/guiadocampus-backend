@@ -35,6 +35,14 @@ export class AdminPrismaRepository implements IAdminRepository {
 		});
 	}
 
+	async findByEmail(email: string): Promise<Admin> {
+		return this.prisma.admin.findFirst({
+			where: {
+				email: email,
+			},
+		});
+	}
+
 	async delete(id: string): Promise<Admin> {
 		return await this.prisma.admin.delete({ where: { id: id } });
 	}

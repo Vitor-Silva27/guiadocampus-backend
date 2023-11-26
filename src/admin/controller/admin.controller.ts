@@ -6,12 +6,15 @@ import {
 	Patch,
 	Param,
 	Delete,
+	UseGuards,
 } from "@nestjs/common";
 import { AdminService } from "../service/admin.service";
 import { CreateAdminDto } from "../dto/create-admin.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { JwtGuard } from "src/auth/jwt.guard";
 
 @ApiTags("admin")
+@UseGuards(JwtGuard)
 @Controller("admin")
 export class AdminController {
 	constructor(private readonly adminService: AdminService) {}

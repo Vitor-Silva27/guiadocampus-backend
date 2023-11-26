@@ -9,7 +9,10 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post("login")
-	login(@Body() loginData: LoginData) {
-		return this.authService.login(loginData);
+	async login(@Body() loginData: LoginData) {
+		const token = await this.authService.login(loginData);
+		return {
+			token,
+		};
 	}
 }
