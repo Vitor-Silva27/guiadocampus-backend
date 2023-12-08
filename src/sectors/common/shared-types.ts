@@ -14,4 +14,8 @@ export class GeneralInfo {
 		description: `a descrição da informação`,
 	})
 	description: string;
+
+	icon: string;
+
+	sectorId?: string;
 }
