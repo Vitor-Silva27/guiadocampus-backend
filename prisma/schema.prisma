@@ -11,14 +11,14 @@ datasource db {
 }
 
 model Sector {
-  id          String      @id @default(uuid())
-  name        String      @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String
+  icon        String
   services    Service[]
-  protocols   Protocol[]
-  guidelines  Guideline[]
   contacts    Contact[]
   infos       Info[]
+  embeds      Embed[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -26,41 +26,23 @@ model Sector {
   @@map("sectors")
 }
 
-model Protocol {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  sectors     Sector[]
-
-  @@map("protocols")
-}
-
 model Service {
   id          String   @id @default(uuid())
   title       String
   description String
   sectors     Sector[]
+  embeds      Embed[]
 
   @@map("services")
 }
 
-model Guideline {
+model Contact {
   id          String   @id @default(uuid())
   title       String
-  description String
-  ref         String
+  responsible String
+  email       String?
+  phone       String?
   sectors     Sector[]
-
-  @@map("guidelines")
-}
-
-model Contact {
-  id             String   @id @default(uuid())
-  administration String
-  responsible    String
-  email          String
-  phone          String
-  sectors        Sector[]
 
   @@map("contacts")
 }
@@ -69,6 +51,7 @@ model Info {
   id          String  @id @default(uuid())
   title       String
   description String
+  icon        String
   Sector      Sector? @relation(fields: [sectorId], references: [id])
   sectorId    String?
 
@@ -76,10 +59,21 @@ model Info {
 }
 
 model Admin {
-  id String @id @default(uuid())
-  name String
+  id       String @id @default(uuid())
+  name     String
   password String
-  email String
+  email    String
 
   @@map("admins")
+}
+
+model Embed {
+  id       String    @id @default(uuid())
+  icon     String?
+  title    String
+  link     String
+  services Service[]
+  sectors  Sector[]
+
+  @@map("embeds")
 }
