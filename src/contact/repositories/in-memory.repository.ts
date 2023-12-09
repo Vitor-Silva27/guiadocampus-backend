@@ -17,7 +17,7 @@ export class InMemoryRepository implements IContactRepository {
 	async update(id: string, data: UpdateContactDto): Promise<Contact> {
 		const index = this.contacts.findIndex(contact => contact.id === id);
 		if (index === -1) {
-			return null; // Ou outra lógica que você preferir
+			return null;
 		}
 
 		const updatedContact = { ...this.contacts[index], ...data };

@@ -9,9 +9,7 @@ describe("ContactService", () => {
 
 	beforeEach(() => {
 		repository = new InMemoryRepository();
-		service = new ContactService(
-			repository /* inject SectorService here if needed */,
-		);
+		service = new ContactService(repository);
 	});
 
 	describe("Contact creation suite", () => {
@@ -41,8 +39,6 @@ describe("ContactService", () => {
 				"Title cannot be empty!",
 			);
 		});
-
-		// Add more tests as needed
 	});
 
 	describe("Contact find all suite", () => {

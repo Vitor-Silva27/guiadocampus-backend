@@ -8,8 +8,9 @@ import { AdminModule } from './admin/admin.module';
 import { SectorServicesModule } from './sector-services/sector-services.module';
 import { ContactModule } from './contact/contact.module';
 import { FilesModule } from './files/files.module';
+import { ProceduresModule } from './procedures/procedures.module';
 @Module({
-	imports: [ConfigModule.forRoot(), SectorsModule, AuthModule, AdminModule, SectorServicesModule, ContactModule, FilesModule],
+	imports: [ConfigModule.forRoot(), SectorsModule, AuthModule, AdminModule, SectorServicesModule, ContactModule, FilesModule, ProceduresModule],
 	controllers: [AppController],
 	providers: [AppService],
 })
