@@ -15,20 +15,20 @@ export class SectorsService {
 		private repository: ISectorRepository,
 	) {}
 
-	async create({ name, generalInfo, description }: CreateSectorDto) {
-		if (await this.exists(name)) {
+	async create(data: CreateSectorDto) {
+		if (await this.exists(data.name)) {
 			throw new BadRequestException(
 				"Could not create a sector that already exists!",
 			);
 		}
 
-		if (!name) {
+		if (!data.name) {
 			throw new BadRequestException(
 				"Could not create a sector without a name!",
 			);
 		}
 
-		return this.repository.create({ name, generalInfo, description });
+		return this.repository.create(data);
 	}
 
 	async findAll() {

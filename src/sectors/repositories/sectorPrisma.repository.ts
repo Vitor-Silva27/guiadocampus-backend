@@ -14,14 +14,7 @@ export class SectorPrismaRepository implements ISectorRepository {
 			data: {
 				name: sector.name,
 				description: sector.description,
-				infos: {
-					createMany: {
-						data: sector.generalInfo.map(info => ({
-							title: info.title,
-							description: info.description,
-						})),
-					},
-				},
+				icon: sector.icon,
 			},
 		});
 

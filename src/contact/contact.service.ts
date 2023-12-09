@@ -1,26 +1,59 @@
-import { Injectable } from '@nestjs/common';
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
+import {
+	BadRequestException,
+	Inject,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
+import { CreateContactDto } from "./dto/create-contact.dto";
+import { UpdateContactDto } from "./dto/update-contact.dto";
+import { IContactRepository } from "./repositories/IContactRepository";
 
 @Injectable()
 export class ContactService {
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
-  }
+	constructor(
+		@Inject("RepositoryGateway")
+		private repository: IContactRepository,
+	) {}
 
-  findAll() {
-    return `This action returns all contact`;
-  }
+	async create(createContactDto: CreateContactDto) {
+		if (!createContactDto.title) {
+			throw new BadRequestException("Title cannot be empty!");
+		}
 
-  findOne(id: number) {
-    return `This action returns a #${id} contact`;
-  }
+		return this.repository.create(createContactDto);
+	}
 
-  update(id: number, updateContactDto: UpdateContactDto) {
-    return `This action updates a #${id} contact`;
-  }
+	async findAll() {
+		return await this.repository.findAll();
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} contact`;
-  }
+	async findOne(id: string) {
+		if (!id) {
+			throw new BadRequestException("invalid ID!");
+		}
+
+		const contact = await this.repository.findOne(id);
+
+		if (!contact) {
+			throw new NotFoundException("Contact does not exists!");
+		}
+
+		return contact;
+	}
+
+	async update(id: string, updateContactDto: UpdateContactDto) {
+		if (!id) {
+			throw new BadRequestException("invalid ID!");
+		}
+
+		return await this.repository.update(id, updateContactDto);
+	}
+
+	async remove(id: string) {
+		if (!id) {
+			throw new BadRequestException("invalid ID!");
+		}
+
+		return await this.repository.delete(id);
+	}
 }

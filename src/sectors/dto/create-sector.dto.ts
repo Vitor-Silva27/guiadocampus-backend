@@ -17,7 +17,7 @@ export class CreateSectorDto {
 	})
 	description: string;
 
-	icon: string;
+	icon?: string;
 
 	@ApiProperty({ type: [GeneralInfo] })
 	generalInfo: GeneralInfo[];

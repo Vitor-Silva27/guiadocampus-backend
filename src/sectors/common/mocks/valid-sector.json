@@ -1,5 +1,9 @@
 {
     "name": "sector",
     "description": "desc",
-    "generalInfo": []
+    "generalInfo": [],
+    "icon": "",
+    "services": [],
+    "contacts": [],
+    "files": []
 }

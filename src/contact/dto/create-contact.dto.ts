@@ -3,4 +3,5 @@ export class CreateContactDto {
 	responsible: string;
 	email?: string;
 	phone?: string;
+	sectorsId: string[];
 }

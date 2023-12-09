@@ -116,6 +116,10 @@ describe("SectorsService", () => {
 				const newSector = await service.create({
 					name: "test",
 					description: "desc test",
+					icon: "",
+					contacts: [],
+					files: [],
+					services: [],
 					generalInfo: [
 						{
 							title: "title test",

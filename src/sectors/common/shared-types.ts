@@ -15,7 +15,7 @@ export class GeneralInfo {
 	})
 	description: string;
 
-	icon: string;
+	icon?: string;
 
 	sectorId?: string;
 }
