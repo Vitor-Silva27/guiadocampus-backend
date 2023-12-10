@@ -8,6 +8,7 @@ import { AdminModule } from "./admin/admin.module";
 import { ContactModule } from "./contact/contact.module";
 import { FilesModule } from "./files/files.module";
 import { ProceduresModule } from "./procedures/procedures.module";
+import { InfoModule } from './info/info.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot(),
@@ -17,6 +18,7 @@ import { ProceduresModule } from "./procedures/procedures.module";
 		ContactModule,
 		FilesModule,
 		ProceduresModule,
+		InfoModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { GeneralInfo } from "../common/shared-types";
 import { CreateContactDto } from "src/contact/dto/create-contact.dto";
 import { CreateFileDto } from "src/files/dto/create-file.dto";
+import { CreateInfoDto } from "src/info/dto/create-info.dto";
 import { CreateProcedureDto } from "src/procedures/dto/create-procedure.dto";
 
 export class CreateSectorDto {
@@ -19,8 +19,7 @@ export class CreateSectorDto {
 
 	icon?: string;
 
-	@ApiProperty({ type: [GeneralInfo] })
-	generalInfo: GeneralInfo[];
+	generalInfo: CreateInfoDto[];
 
 	services?: CreateProcedureDto[];
 

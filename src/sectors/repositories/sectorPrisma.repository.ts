@@ -15,6 +15,16 @@ export class SectorPrismaRepository implements ISectorRepository {
 				name: sector.name,
 				description: sector.description,
 				icon: sector.icon,
+				infos: {
+					connectOrCreate: sector.generalInfo.map(info => ({
+						where: { id: info.id },
+						create: {
+							title: info.title,
+							description: info.description,
+							icon: info.icon,
+						},
+					})),
+				},
 			},
 		});
 
@@ -23,7 +33,7 @@ export class SectorPrismaRepository implements ISectorRepository {
 
 	async update(
 		id: string,
-		{ description, name }: UpdateSectorDto,
+		{ description, name, icon, generalInfo }: UpdateSectorDto,
 	): Promise<Sector> {
 		const sector = await this.prisma.sector.update({
 			where: {
@@ -32,6 +42,24 @@ export class SectorPrismaRepository implements ISectorRepository {
 			data: {
 				name,
 				description,
+				icon,
+				infos: {
+					upsert: Array.isArray(generalInfo)
+						? generalInfo.map(info => ({
+								where: info.id ? { id: info.id } : undefined,
+								update: {
+									title: info.title,
+									description: info.description,
+									icon: info.icon,
+								},
+								create: {
+									title: info.title,
+									description: info.description,
+									icon: info.icon,
+								},
+						  }))
+						: [],
+				},
 			},
 		});
 

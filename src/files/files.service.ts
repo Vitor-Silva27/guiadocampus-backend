@@ -31,7 +31,7 @@ export class FilesService {
 	}
 
 	async uploadFile(file: Express.Multer.File, createFileDto: CreateFileDto) {
-		const key = `${file.filename}${Date.now()}`;
+		const key = `${file.fieldname}${Date.now()}`;
 
 		const bucket = env.S3_BUCKET;
 
