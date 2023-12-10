@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { CreateFileDto } from './dto/create-file.dto';
-import { UpdateFileDto } from './dto/update-file.dto';
-
+import {
+	Inject,
+	Injectable,
+	InternalServerErrorException,
+} from "@nestjs/common";
+import { CreateFileDto } from "./dto/create-file.dto";
+import {
+	S3Client,
+	PutObjectCommand,
+	PutObjectCommandInput,
+} from "@aws-sdk/client-s3";
+import { env } from "process";
+import { IFileRepository } from "./repositories/IFileRepository";
 @Injectable()
 export class FilesService {
-  create(createFileDto: CreateFileDto) {
-    return 'This action adds a new file';
-  }
+	private region: string;
+	private s3: S3Client;
 
-  findAll() {
-    return `This action returns all files`;
-  }
+	constructor(
+		@Inject("RepositoryGateway")
+		private repository: IFileRepository,
+	) {
+		this.region = env.S3_REGION;
+		this.s3 = new S3Client({
+			region: this.region,
+			credentials: {
+				accessKeyId: env.S3_ACCESS_KEY,
+				secretAccessKey: env.S3_SECRET,
+			},
+		});
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
-  }
+	async uploadFile(file: Express.Multer.File, createFileDto: CreateFileDto) {
+		const key = `${file.filename}${Date.now()}`;
 
-  update(id: number, updateFileDto: UpdateFileDto) {
-    return `This action updates a #${id} file`;
-  }
+		const bucket = env.S3_BUCKET;
 
-  remove(id: number) {
-    return `This action removes a #${id} file`;
-  }
+		const input: PutObjectCommandInput = {
+			Body: file.buffer,
+			Bucket: bucket,
+			Key: key,
+			ContentType: file.mimetype,
+			ACL: "public-read",
+		};
+
+		const res = await this.s3.send(new PutObjectCommand(input));
+
+		if (res.$metadata.httpStatusCode === 200) {
+			createFileDto.link = `https://${bucket}.s3.amazonaws.com/${key}`;
+
+			return await this.repository.create(createFileDto);
+		} else {
+			throw new InternalServerErrorException("File upload failed");
+		}
+	}
 }

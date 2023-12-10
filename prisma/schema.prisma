@@ -68,12 +68,14 @@ model Admin {
 }
 
 model Embed {
-  id       String    @id @default(uuid())
-  icon     String?
-  title    String
-  link     String
-  services Service[]
-  sectors  Sector[]
+  id        String   @id @default(uuid())
+  icon      String?
+  title     String
+  link      String
+  Sector    Sector?  @relation(fields: [sectorId], references: [id])
+  sectorId  String?
+  Service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
 
   @@map("embeds")
 }

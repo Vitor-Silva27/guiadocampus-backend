@@ -55,6 +55,7 @@ export class SectorPrismaRepository implements ISectorRepository {
 						description: true,
 					},
 				},
+				embeds: true,
 			},
 		});
 	}
