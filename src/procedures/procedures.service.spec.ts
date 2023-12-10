@@ -1,4 +1,3 @@
-import { Test, TestingModule } from "@nestjs/testing";
 import { ProceduresService } from "./procedures.service";
 import { IProcedureRepository } from "./repositories/IProcedureRepository";
 import { InMemoryRepository } from "./repositories/in-memory.repository";

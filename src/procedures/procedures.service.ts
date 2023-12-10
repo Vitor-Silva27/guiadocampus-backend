@@ -1,8 +1,4 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { CreateProcedureDto } from "./dto/create-procedure.dto";
 import { UpdateProcedureDto } from "./dto/update-procedure.dto";
 import { IProcedureRepository } from "./repositories/IProcedureRepository";
@@ -10,7 +6,10 @@ import { Procedure } from "./entities/procedure.entity";
 
 @Injectable()
 export class ProceduresService {
-	constructor(private repository: IProcedureRepository) {}
+	constructor(
+		@Inject("RepositoryGateway")
+		private repository: IProcedureRepository,
+	) {}
 
 	async create(createProcedureDto: CreateProcedureDto): Promise<Procedure> {
 		if (!createProcedureDto.title) {
