@@ -59,6 +59,15 @@ model Info {
   @@map("infos")
 }
 
+model ClassSchedule {
+  id      String @id @default(uuid())
+  course  String
+  embed   Embed  @relation(fields: [embedId], references: [id])
+  embedId String @unique
+
+  @@map("classes_schedule")
+}
+
 model Admin {
   id       String @id @default(uuid())
   name     String
@@ -69,14 +78,15 @@ model Admin {
 }
 
 model Embed {
-  id        String   @id @default(uuid())
-  icon      String?
-  title     String
-  link      String
-  Sector    Sector?  @relation(fields: [sectorId], references: [id])
-  sectorId  String?
-  Service   Service? @relation(fields: [serviceId], references: [id])
-  serviceId String?
+  id              String         @id @default(uuid())
+  icon            String?
+  title           String
+  link            String
+  Sector          Sector?        @relation(fields: [sectorId], references: [id])
+  sectorId        String?
+  Service         Service?       @relation(fields: [serviceId], references: [id])
+  serviceId       String?
+  ClassSchedule   ClassSchedule?
 
   @@map("embeds")
 }
