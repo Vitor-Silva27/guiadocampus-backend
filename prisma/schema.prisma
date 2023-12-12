@@ -77,6 +77,17 @@ model Admin {
   @@map("admins")
 }
 
+model Map {
+  id      String @id @default(uuid())
+  embed   Embed  @relation(fields: [embedId], references: [id])
+  embedId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("map")
+}
+
 model Embed {
   id              String         @id @default(uuid())
   icon            String?
@@ -87,6 +98,7 @@ model Embed {
   Service         Service?       @relation(fields: [serviceId], references: [id])
   serviceId       String?
   ClassSchedule   ClassSchedule?
+  map Map?
 
   @@map("embeds")
 }
