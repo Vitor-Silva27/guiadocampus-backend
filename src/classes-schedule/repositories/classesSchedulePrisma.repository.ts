@@ -49,6 +49,7 @@ export class ClassesSchedulePrismaRepository
 				embed: {
 					select: {
 						link: true,
+						icon: true,
 					},
 				},
 			},
