@@ -46,6 +46,9 @@ export class SectorPrismaRepository implements ISectorRepository {
 				name: true,
 				id: true,
 			},
+			orderBy: {
+				name: "asc",
+			},
 		});
 	}
 
@@ -97,5 +100,27 @@ export class SectorPrismaRepository implements ISectorRepository {
 		});
 
 		return !!exists;
+	}
+
+	async search(query: string): Promise<Sector[]> {
+		return await this.prisma.sector.findMany({
+			where: {
+				OR: [
+					{
+						name: {
+							contains: query,
+						},
+					},
+					{
+						description: {
+							contains: query,
+						},
+					},
+				],
+			},
+			orderBy: {
+				name: "asc",
+			},
+		});
 	}
 }

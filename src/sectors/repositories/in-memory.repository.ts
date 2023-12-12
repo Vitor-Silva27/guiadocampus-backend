@@ -10,6 +10,9 @@ import { ISectorRepository } from "./ISectorRepository";
 
 @Injectable()
 export class InMemoryRepository implements ISectorRepository {
+	search(query: string): Promise<Sector[]> {
+		throw new Error("Method not implemented.");
+	}
 	private sectors: Sector[] = [];
 
 	async create(sector: CreateSectorDto): Promise<Sector> {

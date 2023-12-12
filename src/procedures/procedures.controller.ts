@@ -27,6 +27,11 @@ export class ProceduresController {
 		return this.proceduresService.findAll();
 	}
 
+	@Get("search")
+	search(@Query("term") term: string) {
+		return this.proceduresService.search(term);
+	}
+
 	@Get(":id")
 	findOne(@Param("id") id: string) {
 		return this.proceduresService.findOne(id);

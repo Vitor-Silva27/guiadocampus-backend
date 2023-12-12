@@ -8,5 +8,6 @@ export interface ISectorRepository {
 	findAll(): Promise<Sector[]>;
 	findOne(id: string): Promise<Sector>;
 	delete(id: string): Promise<Sector>;
+	search(query: string): Promise<Sector[]>;
 	exists(identifier: string): Promise<boolean>;
 }

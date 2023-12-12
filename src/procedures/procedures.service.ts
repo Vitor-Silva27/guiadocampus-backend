@@ -55,4 +55,8 @@ export class ProceduresService {
 
 		return this.repository.delete(id);
 	}
+
+	async search(query: string) {
+		return await this.repository.search(query);
+	}
 }

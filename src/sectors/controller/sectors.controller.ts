@@ -7,6 +7,7 @@ import {
 	Param,
 	Delete,
 	UseGuards,
+	Query,
 } from "@nestjs/common";
 import { SectorsService } from "../service/sectors.service";
 import { CreateSectorDto } from "../dto/create-sector.dto";
@@ -28,6 +29,11 @@ export class SectorsController {
 	@Get()
 	findAll() {
 		return this.sectorsService.findAll();
+	}
+
+	@Get("search")
+	search(@Query("term") term: string) {
+		return this.sectorsService.search(term);
 	}
 
 	@Get(":id")

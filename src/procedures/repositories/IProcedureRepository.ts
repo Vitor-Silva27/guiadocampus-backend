@@ -9,4 +9,5 @@ export interface IProcedureRepository {
 	findOne(id: string): Promise<Procedure>;
 	delete(id: string): Promise<Procedure>;
 	findBySector(sectorId: string): Promise<Procedure[]>;
+	search(query: string): Promise<Procedure[]>;
 }

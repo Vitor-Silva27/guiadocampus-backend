@@ -41,7 +41,11 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 	}
 
 	async findAll(): Promise<Procedure[]> {
-		return await this.prisma.service.findMany();
+		return await this.prisma.service.findMany({
+			orderBy: {
+				title: "asc",
+			},
+		});
 	}
 
 	async findBySector(sectorId: string): Promise<Procedure[]> {
@@ -52,6 +56,9 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 						id: sectorId,
 					},
 				},
+			},
+			orderBy: {
+				title: "asc",
 			},
 		});
 	}
@@ -71,6 +78,23 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 		return await this.prisma.service.delete({
 			where: {
 				id,
+			},
+		});
+	}
+
+	async search(query: string): Promise<Procedure[]> {
+		return await this.prisma.service.findMany({
+			where: {
+				OR: [
+					{
+						title: {
+							contains: query,
+						},
+					},
+				],
+			},
+			orderBy: {
+				title: "asc",
 			},
 		});
 	}

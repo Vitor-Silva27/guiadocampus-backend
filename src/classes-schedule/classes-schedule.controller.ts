@@ -6,6 +6,7 @@ import {
 	Patch,
 	Param,
 	Delete,
+	Query,
 } from "@nestjs/common";
 import { ClassesScheduleService } from "./classes-schedule.service";
 import { CreateClassesScheduleDto } from "./dto/create-classes-schedule.dto";
@@ -25,6 +26,11 @@ export class ClassesScheduleController {
 	@Get()
 	findAll() {
 		return this.classesScheduleService.findAll();
+	}
+
+	@Get("search")
+	search(@Query("term") term: string) {
+		return this.classesScheduleService.search(term);
 	}
 
 	@Get(":id")

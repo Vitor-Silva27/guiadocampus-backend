@@ -84,4 +84,8 @@ export class SectorsService {
 	async exists(id: string): Promise<boolean> {
 		return this.repository.exists(id);
 	}
+
+	async search(query: string) {
+		return await this.repository.search(query);
+	}
 }

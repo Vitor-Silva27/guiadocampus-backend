@@ -57,4 +57,8 @@ export class ClassesScheduleService {
 
 		return await this.repository.delete(id);
 	}
+
+	async search(query: string) {
+		return await this.repository.search(query);
+	}
 }

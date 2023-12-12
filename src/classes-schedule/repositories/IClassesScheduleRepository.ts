@@ -12,4 +12,5 @@ export interface IClassesScheduleRepository {
 	findOne(id: string): Promise<ClassesSchedule>;
 	delete(id: string): Promise<ClassesSchedule>;
 	exists(identifier: string): Promise<boolean>;
+	search(query: string): Promise<ClassesSchedule[]>;
 }

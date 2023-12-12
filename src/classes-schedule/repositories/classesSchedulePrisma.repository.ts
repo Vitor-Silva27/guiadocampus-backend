@@ -53,6 +53,9 @@ export class ClassesSchedulePrismaRepository
 					},
 				},
 			},
+			orderBy: {
+				course: "asc",
+			},
 		});
 	}
 
@@ -91,5 +94,22 @@ export class ClassesSchedulePrismaRepository
 		});
 
 		return !!exists;
+	}
+
+	async search(query: string): Promise<ClassesSchedule[]> {
+		return await this.prisma.classSchedule.findMany({
+			where: {
+				OR: [
+					{
+						course: {
+							contains: query,
+						},
+					},
+				],
+			},
+			orderBy: {
+				course: "asc",
+			},
+		});
 	}
 }
