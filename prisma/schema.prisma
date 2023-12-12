@@ -30,6 +30,7 @@ model Service {
   id          String   @id @default(uuid())
   title       String
   description String
+  icon        String?
   sectors     Sector[]
   embeds      Embed[]
 

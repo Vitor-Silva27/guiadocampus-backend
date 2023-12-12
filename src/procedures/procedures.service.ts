@@ -44,6 +44,10 @@ export class ProceduresService {
 		return this.repository.update(id, updateProcedureDto);
 	}
 
+	async findBySector(sectorId: string): Promise<Procedure[]> {
+		return await this.repository.findBySector(sectorId);
+	}
+
 	async remove(id: string): Promise<Procedure> {
 		if (!id) {
 			throw new BadRequestException("Invalid id!");

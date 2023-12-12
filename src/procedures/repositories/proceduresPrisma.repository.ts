@@ -33,6 +33,7 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 			data: {
 				title: data.title,
 				description: data.description,
+				icon: data.icon,
 			},
 		});
 
@@ -43,10 +44,25 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 		return await this.prisma.service.findMany();
 	}
 
+	async findBySector(sectorId: string): Promise<Procedure[]> {
+		return await this.prisma.service.findMany({
+			where: {
+				sectors: {
+					some: {
+						id: sectorId,
+					},
+				},
+			},
+		});
+	}
+
 	async findOne(id: string): Promise<Procedure> {
 		return this.prisma.service.findUnique({
 			where: {
 				id: id,
+			},
+			include: {
+				embeds: true,
 			},
 		});
 	}

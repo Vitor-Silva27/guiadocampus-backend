@@ -15,16 +15,6 @@ export class SectorPrismaRepository implements ISectorRepository {
 				name: sector.name,
 				description: sector.description,
 				icon: sector.icon,
-				infos: {
-					connectOrCreate: sector.generalInfo.map(info => ({
-						where: { id: info.id },
-						create: {
-							title: info.title,
-							description: info.description,
-							icon: info.icon,
-						},
-					})),
-				},
 			},
 		});
 
@@ -43,23 +33,6 @@ export class SectorPrismaRepository implements ISectorRepository {
 				name,
 				description,
 				icon,
-				infos: {
-					upsert: Array.isArray(generalInfo)
-						? generalInfo.map(info => ({
-								where: info.id ? { id: info.id } : undefined,
-								update: {
-									title: info.title,
-									description: info.description,
-									icon: info.icon,
-								},
-								create: {
-									title: info.title,
-									description: info.description,
-									icon: info.icon,
-								},
-						  }))
-						: [],
-				},
 			},
 		});
 
@@ -67,7 +40,13 @@ export class SectorPrismaRepository implements ISectorRepository {
 	}
 
 	async findAll(): Promise<Sector[]> {
-		return await this.prisma.sector.findMany();
+		return await this.prisma.sector.findMany({
+			select: {
+				icon: true,
+				name: true,
+				id: true,
+			},
+		});
 	}
 
 	async findOne(id: string): Promise<Sector> {
@@ -81,6 +60,13 @@ export class SectorPrismaRepository implements ISectorRepository {
 					select: {
 						title: true,
 						description: true,
+						icon: true,
+					},
+				},
+				services: {
+					select: {
+						id: true,
+						title: true,
 					},
 				},
 				embeds: true,

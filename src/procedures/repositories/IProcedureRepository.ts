@@ -8,4 +8,5 @@ export interface IProcedureRepository {
 	findAll(): Promise<Procedure[]>;
 	findOne(id: string): Promise<Procedure>;
 	delete(id: string): Promise<Procedure>;
+	findBySector(sectorId: string): Promise<Procedure[]>;
 }

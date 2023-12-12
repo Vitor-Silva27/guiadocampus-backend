@@ -17,7 +17,7 @@ export class Sector {
 		example: "lorem ipsum dolor sit amet, consectetur adipis",
 		description: `a descrição geral do setor que será criado`,
 	})
-	description: string;
+	description?: string;
 
 	generalInfo?: CreateInfoDto[];
 

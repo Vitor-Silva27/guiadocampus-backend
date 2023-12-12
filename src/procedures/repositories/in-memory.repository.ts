@@ -6,6 +6,9 @@ import { UpdateProcedureDto } from "../dto/update-procedure.dto";
 
 @Injectable()
 export class InMemoryRepository implements IProcedureRepository {
+	findBySector(sectorId: string): Promise<Procedure[]> {
+		throw new Error("Method not implemented.");
+	}
 	private procedures: Procedure[] = [];
 
 	async create(Procedure: CreateProcedureDto): Promise<Procedure> {
