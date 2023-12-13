@@ -13,6 +13,7 @@ export class ProcedurePrismaRepository implements IProcedureRepository {
 		const newProcedure = await this.prisma.service.create({
 			data: {
 				title: procedure.title,
+				icon: procedure.icon,
 				description: procedure.description,
 				sectors: {
 					connect: procedure.sectorsId.map(sector => ({
