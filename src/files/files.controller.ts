@@ -11,12 +11,17 @@ import { CreateFileDto } from "./dto/create-file.dto";
 import { Express } from "express";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { JwtGuard } from "src/auth/jwt.guard";
+import { ApiBearerAuth, ApiConsumes, ApiTags } from "@nestjs/swagger";
+
+@ApiTags("files")
 @Controller("files")
 export class FilesController {
 	constructor(private readonly filesService: FilesService) {}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Post()
+	@ApiConsumes("multipart/form-data")
 	@UseInterceptors(FileInterceptor("file"))
 	uploadFile(
 		@Body() createFileDto: CreateFileDto,

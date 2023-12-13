@@ -10,9 +10,10 @@ import {
 } from "@nestjs/common";
 import { AdminService } from "../service/admin.service";
 import { CreateAdminDto } from "../dto/create-admin.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtGuard } from "src/auth/jwt.guard";
 
+@ApiBearerAuth()
 @ApiTags("admin")
 @UseGuards(JwtGuard)
 @Controller("admin")

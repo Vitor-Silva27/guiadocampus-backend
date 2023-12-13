@@ -14,11 +14,14 @@ import { ProceduresService } from "./procedures.service";
 import { CreateProcedureDto } from "./dto/create-procedure.dto";
 import { UpdateProcedureDto } from "./dto/update-procedure.dto";
 import { JwtGuard } from "src/auth/jwt.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("services/protocols")
 @Controller("procedures")
 export class ProceduresController {
 	constructor(private readonly proceduresService: ProceduresService) {}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Post()
 	create(@Body() createProcedureDto: CreateProcedureDto) {
@@ -45,6 +48,7 @@ export class ProceduresController {
 		return this.proceduresService.findBySector(id);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Patch(":id")
 	update(
@@ -54,6 +58,7 @@ export class ProceduresController {
 		return this.proceduresService.update(id, updateProcedureDto);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Delete(":id")
 	remove(@Param("id") id: string) {

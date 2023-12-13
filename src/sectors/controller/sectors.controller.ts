@@ -12,7 +12,7 @@ import {
 import { SectorsService } from "../service/sectors.service";
 import { CreateSectorDto } from "../dto/create-sector.dto";
 import { UpdateSectorDto } from "../dto/update-sector.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtGuard } from "src/auth/jwt.guard";
 
 @ApiTags("sectors")
@@ -20,6 +20,7 @@ import { JwtGuard } from "src/auth/jwt.guard";
 export class SectorsController {
 	constructor(private readonly sectorsService: SectorsService) {}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Post()
 	create(@Body() createSectorDto: CreateSectorDto) {
@@ -41,12 +42,14 @@ export class SectorsController {
 		return this.sectorsService.findOne(id);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Patch(":id")
 	update(@Param("id") id: string, @Body() updateSectorDto: UpdateSectorDto) {
 		return this.sectorsService.update(id, updateSectorDto);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Delete(":id")
 	remove(@Param("id") id: string) {

@@ -13,13 +13,16 @@ import { ClassesScheduleService } from "./classes-schedule.service";
 import { CreateClassesScheduleDto } from "./dto/create-classes-schedule.dto";
 import { UpdateClassesScheduleDto } from "./dto/update-classes-schedule.dto";
 import { JwtGuard } from "src/auth/jwt.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("schedules")
 @Controller("classes-schedule")
 export class ClassesScheduleController {
 	constructor(
 		private readonly classesScheduleService: ClassesScheduleService,
 	) {}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Post()
 	create(@Body() createClassesScheduleDto: CreateClassesScheduleDto) {
@@ -41,6 +44,7 @@ export class ClassesScheduleController {
 		return this.classesScheduleService.findOne(id);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Patch(":id")
 	update(
@@ -50,6 +54,7 @@ export class ClassesScheduleController {
 		return this.classesScheduleService.update(id, updateClassesScheduleDto);
 	}
 
+	@ApiBearerAuth()
 	@UseGuards(JwtGuard)
 	@Delete(":id")
 	remove(@Param("id") id: string) {
