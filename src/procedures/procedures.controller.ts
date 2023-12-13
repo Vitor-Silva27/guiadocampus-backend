@@ -8,15 +8,18 @@ import {
 	Delete,
 	Req,
 	Query,
+	UseGuards,
 } from "@nestjs/common";
 import { ProceduresService } from "./procedures.service";
 import { CreateProcedureDto } from "./dto/create-procedure.dto";
 import { UpdateProcedureDto } from "./dto/update-procedure.dto";
+import { JwtGuard } from "src/auth/jwt.guard";
 
 @Controller("procedures")
 export class ProceduresController {
 	constructor(private readonly proceduresService: ProceduresService) {}
 
+	@UseGuards(JwtGuard)
 	@Post()
 	create(@Body() createProcedureDto: CreateProcedureDto) {
 		return this.proceduresService.create(createProcedureDto);
@@ -42,6 +45,7 @@ export class ProceduresController {
 		return this.proceduresService.findBySector(id);
 	}
 
+	@UseGuards(JwtGuard)
 	@Patch(":id")
 	update(
 		@Param("id") id: string,
@@ -50,6 +54,7 @@ export class ProceduresController {
 		return this.proceduresService.update(id, updateProcedureDto);
 	}
 
+	@UseGuards(JwtGuard)
 	@Delete(":id")
 	remove(@Param("id") id: string) {
 		return this.proceduresService.remove(id);

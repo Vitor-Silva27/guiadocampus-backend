@@ -7,10 +7,12 @@ import {
 	Param,
 	Delete,
 	Query,
+	UseGuards,
 } from "@nestjs/common";
 import { ClassesScheduleService } from "./classes-schedule.service";
 import { CreateClassesScheduleDto } from "./dto/create-classes-schedule.dto";
 import { UpdateClassesScheduleDto } from "./dto/update-classes-schedule.dto";
+import { JwtGuard } from "src/auth/jwt.guard";
 
 @Controller("classes-schedule")
 export class ClassesScheduleController {
@@ -18,6 +20,7 @@ export class ClassesScheduleController {
 		private readonly classesScheduleService: ClassesScheduleService,
 	) {}
 
+	@UseGuards(JwtGuard)
 	@Post()
 	create(@Body() createClassesScheduleDto: CreateClassesScheduleDto) {
 		return this.classesScheduleService.create(createClassesScheduleDto);
@@ -38,6 +41,7 @@ export class ClassesScheduleController {
 		return this.classesScheduleService.findOne(id);
 	}
 
+	@UseGuards(JwtGuard)
 	@Patch(":id")
 	update(
 		@Param("id") id: string,
@@ -46,6 +50,7 @@ export class ClassesScheduleController {
 		return this.classesScheduleService.update(id, updateClassesScheduleDto);
 	}
 
+	@UseGuards(JwtGuard)
 	@Delete(":id")
 	remove(@Param("id") id: string) {
 		return this.classesScheduleService.remove(id);
