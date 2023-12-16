@@ -6,8 +6,6 @@ COPY . .
 
 RUN npm install --quiet --no-optional --no-fund --loglevel=error
 
-RUN npx prisma migrate deploy
-
 RUN npm run build
 
 EXPOSE 8080
