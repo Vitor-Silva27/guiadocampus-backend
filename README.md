@@ -137,7 +137,10 @@ and to run:
 
 * for production:
     ```sh
-    npm run start:dev
+    npm run build
+    ```
+    ```sh
+    npm run start
     ```
 
 
