@@ -109,7 +109,7 @@ S3_SECRET=(the secret access key to your aws)
 ```sh
 npx prisma migrate deploy
 ```
-3. npw to install the dependencies and run the app you will have two choices, using docker or without docker
+3. now to install the dependencies and run the app you will have two choices, using docker or without docker
 
 #### with docker is quite easy. you have to run:
 
