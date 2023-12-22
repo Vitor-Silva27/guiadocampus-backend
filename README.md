@@ -49,7 +49,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="https://live.staticflickr.com/65535/53415030818_2398366cd4_z.jpg" />
 
 At IFPI Campus Pedro II, where I study, I noticed that despite having good infrastructure, internal communication faced challenges. Therefore, I developed a project using technologies such as QR codes and a website to enhance access to information about rooms and departments. The goal was to make communication more efficient and accessible, especially for students.
 
