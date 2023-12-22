@@ -1,10 +1,10 @@
 {
   "name": "backend-gc",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "A Api do Guia do Campus, um site que visa simplificar o acesso a informações essenciais sobre os serviços e recursos disponíveis em vários departamentos e salas da minha universidade.",
+  "author": "vitor silva",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -15,9 +15,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest --verbose",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:cov": "jest --coverage"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.470.0",

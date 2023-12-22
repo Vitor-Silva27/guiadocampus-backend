@@ -1,6 +1,6 @@
 import { CreateClassesScheduleDto } from "../dto/create-classes-schedule.dto";
 import { UpdateClassesScheduleDto } from "../dto/update-classes-schedule.dto";
-import { ClassesSchedule } from "../entities/classes-schedule.entity";
+import ClassesSchedule from "../entities/classes-schedule.entity";
 
 export interface IClassesScheduleRepository {
 	create(classesSchedule: CreateClassesScheduleDto): Promise<ClassesSchedule>;

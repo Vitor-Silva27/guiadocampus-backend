@@ -2,7 +2,7 @@ import { PrismaService } from "src/database/prisma.service";
 import { IClassesScheduleRepository } from "./IClassesScheduleRepository";
 import { Injectable } from "@nestjs/common";
 import { CreateClassesScheduleDto } from "../dto/create-classes-schedule.dto";
-import { ClassesSchedule } from "../entities/classes-schedule.entity";
+import ClassesSchedule from "../entities/classes-schedule.entity";
 import { UpdateClassesScheduleDto } from "../dto/update-classes-schedule.dto";
 
 @Injectable()

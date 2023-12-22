@@ -10,7 +10,7 @@ import { FilesModule } from "./files/files.module";
 import { ProceduresModule } from "./procedures/procedures.module";
 import { InfoModule } from "./info/info.module";
 import { ClassesScheduleModule } from "./classes-schedule/classes-schedule.module";
-import { MapModule } from './map/map.module';
+import { MapModule } from "./map/map.module";
 @Module({
 	imports: [
 		ConfigModule.forRoot(),
