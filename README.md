@@ -105,17 +105,17 @@ S3_REGION=(the region of you aws s3 server)
 S3_ACCESS_KEY=(the access key to your aws)
 S3_SECRET=(the secret access key to your aws)
 ```
-2. run migrations to setup your database
-```sh
-npx prisma migrate deploy
-```
-3. now to install the dependencies and run the app you will have two choices, using docker or without docker
+2. now to install the dependencies and run the app you will have two choices, using docker or without docker
 
 #### with docker is quite easy. you have to run:
 
 * docker
     ```sh
     docker build --pull --rm -f "Dockerfile" -t guiadocampus:latest "."
+    ```
+    run migrations to setup your database
+    ```sh
+    npx prisma migrate deploy
     ```
     when it finish just run:
     ```sh
@@ -128,6 +128,10 @@ then access your port 8080
   ```sh
     npm i
   ```
+  run migrations to setup your database
+    ```sh
+    npx prisma migrate deploy
+    ```
 and to run:
 
 * for development:
