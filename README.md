@@ -10,7 +10,7 @@
 
   <p align="center">
     <br />
-    <a href="https://guiadocampus-jln105qc.b4a.run">View API</a>
+    <a href="https://oyster-app-puu8q.ondigitalocean.app/api">View API</a>
     ·
     <a href="https://guiadocampus.vercel.app/">View website</a>
       ·
