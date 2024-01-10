@@ -2,7 +2,7 @@ import { PrismaService } from "src/database/prisma.service";
 import { IContactRepository } from "./IContactRepository";
 import { Injectable } from "@nestjs/common";
 import { CreateContactDto } from "../dto/create-contact.dto";
-import { Contact } from "@prisma/client";
+import { Contact } from "../entities/contact.entity";
 import { UpdateContactDto } from "../dto/update-contact.dto";
 
 @Injectable()
