@@ -9,11 +9,6 @@
   <h3 align="center">Guia do campus - API</h3>
 
   <p align="center">
-    <br />
-    <a href="https://oyster-app-puu8q.ondigitalocean.app/api">View API</a>
-    ·
-    <a href="https://guiadocampus.vercel.app/">View website</a>
-      ·
     <a href="https://github.com/Vitor-Silva27/guiadocampus-frontend">View front end repo</a>
   </p>
 </div>
